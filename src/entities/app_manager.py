@@ -5,7 +5,7 @@ import tkinter as tk
 from config import APP_NAME
 from static import styles
 from use_cases import views
-from use_cases.views import MainScreen
+from use_cases.views import AddCP, MainScreen
 
 
 class ScreenManager(tk.Tk):
@@ -37,7 +37,7 @@ class ScreenManager(tk.Tk):
             _frame = View(self.views_container, self)
             self.views_[View] = _frame
             _frame.grid(row=0, column=0, sticky=tk.NSEW)
-        self.show_frame(MainScreen)
+        self.show_frame(AddCP)
 
     def _get_all_views(self):
         views_list = inspect.getmembers(sys.modules[views.__name__], inspect.isclass)
