@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 
 from adapters.postal_code_adapter import get_locality_by_cp
 from static import styles
@@ -78,17 +79,21 @@ class AddCP(tk.Frame):
 class AddClient(tk.Frame):
     def __init__(self, parent, manager):
         super().__init__(parent)
+        self.clients_table = None
         self.manager = manager
         self.configure(background=styles.BACKGROUND)
         self.name_var = tk.StringVar(self)
         self.surname_var = tk.StringVar(self)
         self.phone_var = tk.StringVar(self)
+        self.table_columns = ["name", "surname", "phone"]
         self.init_widgets()
 
     def save_new_client(self):
         name = self.name_var.get()
         surname = self.surname_var.get()
         phone = self.phone_var.get()
+        self.clients_table.insert('', tk.END, values=(name, surname, phone))
+        self.clients_table.update()
         print(f"Nou client: {name=} - {surname=} - {phone=}")
 
     def init_widgets(self):
@@ -165,3 +170,16 @@ class AddClient(tk.Frame):
             command=self.save_new_client,
             **styles.STYLE,
         ).pack(**styles.PACK)
+
+        self.clients_table = ttk.Treeview(self, columns=self.table_columns, show="headings")
+        self.clients_table.heading('name', text='Nom')
+        self.clients_table.heading('surname', text='Cognom')
+        self.clients_table.heading('phone', text='Telèfon')
+
+        fake_clients = [
+            ("Dimas", "Ávila", "610880930"),
+            ("Jordi", "García", "689743561"),
+        ]
+        [self.clients_table.insert('', tk.END, values=client) for client in fake_clients]
+        self.clients_table.pack(**styles.PACK)
+
