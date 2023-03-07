@@ -29,6 +29,15 @@ class AddCP(tk.Frame):
         self.init_widgets()
 
     def init_widgets(self) -> None:
+        tk.Button(
+            self,
+            text="<- Afegir Client",
+            relief=tk.FLAT,
+            activebackground=styles.BACKGROUND,
+            activeforeground=styles.TEXT,
+            command=lambda: self.manager.show_frame(AddClient),
+            **styles.STYLE,
+        ).pack(**styles.PACK)
         tk.Label(
             master=self, text="Guardar Codi Postal", justify=tk.CENTER, **styles.STYLE
         ).pack(**styles.PACK)
@@ -92,7 +101,7 @@ class AddClient(tk.Frame):
         name = self.name_var.get()
         surname = self.surname_var.get()
         phone = self.phone_var.get()
-        self.clients_table.insert('', tk.END, values=(name, surname, phone))
+        self.clients_table.insert("", tk.END, values=(name, surname, phone))
         self.clients_table.update()
         print(f"Nou client: {name=} - {surname=} - {phone=}")
 
@@ -121,7 +130,9 @@ class AddClient(tk.Frame):
             sticky=tk.EW,
         )
 
-        tk.Entry(form_frame, textvariable=self.name_var, justify=tk.CENTER, **styles.STYLE).grid(
+        tk.Entry(
+            form_frame, textvariable=self.name_var, justify=tk.CENTER, **styles.STYLE
+        ).grid(
             column=1,
             row=0,
             padx=5,
@@ -137,7 +148,9 @@ class AddClient(tk.Frame):
             sticky=tk.EW,
         )
 
-        tk.Entry(form_frame, textvariable=self.surname_var, justify=tk.CENTER, **styles.STYLE).grid(
+        tk.Entry(
+            form_frame, textvariable=self.surname_var, justify=tk.CENTER, **styles.STYLE
+        ).grid(
             column=1,
             row=1,
             padx=5,
@@ -153,7 +166,9 @@ class AddClient(tk.Frame):
             sticky=tk.EW,
         )
 
-        tk.Entry(form_frame, textvariable=self.phone_var, justify=tk.CENTER, **styles.STYLE).grid(
+        tk.Entry(
+            form_frame, textvariable=self.phone_var, justify=tk.CENTER, **styles.STYLE
+        ).grid(
             column=1,
             row=2,
             padx=5,
@@ -163,7 +178,7 @@ class AddClient(tk.Frame):
 
         tk.Button(
             self,
-            text="Guardar cliente",
+            text="Guardar client",
             relief=tk.FLAT,
             activebackground=styles.BACKGROUND,
             activeforeground=styles.TEXT,
@@ -171,15 +186,29 @@ class AddClient(tk.Frame):
             **styles.STYLE,
         ).pack(**styles.PACK)
 
-        self.clients_table = ttk.Treeview(self, columns=self.table_columns, show="headings")
-        self.clients_table.heading('name', text='Nom')
-        self.clients_table.heading('surname', text='Cognom')
-        self.clients_table.heading('phone', text='Telèfon')
+        self.clients_table = ttk.Treeview(
+            self, columns=self.table_columns, show="headings"
+        )
+        self.clients_table.heading("name", text="Nom")
+        self.clients_table.heading("surname", text="Cognom")
+        self.clients_table.heading("phone", text="Telèfon")
 
         fake_clients = [
             ("Dimas", "Ávila", "610880930"),
-            ("Jordi", "García", "689743561"),
+            ("Marc", "García", "689743561"),
         ]
-        [self.clients_table.insert('', tk.END, values=client) for client in fake_clients]
+        [
+            self.clients_table.insert("", tk.END, values=client)
+            for client in fake_clients
+        ]
         self.clients_table.pack(**styles.PACK)
 
+        tk.Button(
+            self,
+            text="Afegir codi postal ->",
+            relief=tk.FLAT,
+            activebackground=styles.BACKGROUND,
+            activeforeground=styles.TEXT,
+            command=lambda: self.manager.show_frame(AddCP),
+            **styles.STYLE,
+        ).pack(**styles.PACK)
